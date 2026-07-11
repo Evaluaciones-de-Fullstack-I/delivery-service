@@ -3,8 +3,8 @@ FROM maven:3.8.5-openjdk-17 AS build
 COPY . .
 RUN ./mvnw clean package -DskipTests
 
-# 2. Etapa de ejecución con una imagen ligera de Java 17
-FROM openjdk:17-jdk-slim
+# 2. Etapa de ejecución con una imagen oficial y ligera de Java 17
+FROM eclipse-temurin:17-jre-alpine
 COPY --from=build /target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","app.jar"]
